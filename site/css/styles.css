@@ -56,6 +56,12 @@
   --gutter:    32px;
   --radius:    2px;
 
+  /* Rythme vertical — une seule échelle pour toutes les sections,
+     redéfinie aux points de rupture (voir § 6). */
+  --section-y: 96px;   /* respiration haut/bas d'une section */
+  --gap-col:   56px;   /* écart entre colonnes d'une grille */
+  --gap-card:  28px;   /* écart entre cartes d'une même grille */
+
   /* Motion */
   --ease: cubic-bezier(.2, .6, .2, 1);
 }
@@ -290,14 +296,13 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   color: transparent;
   -webkit-text-stroke: 1px var(--c-watermark);
 }
-.hero__inner { position: relative; }
+.hero__inner { position: relative; padding-block: var(--section-y); }
 .hero__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 56px;
+  gap: var(--gap-col);
   align-items: end;
 }
-.hero__copy { padding: 88px 0 96px; }
 .hero__visual { align-self: center; }
 .hero .eyebrow { margin-bottom: 28px; }
 .hero__title {
@@ -334,7 +339,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 .stat {
-  padding: 52px 40px 56px;
+  padding: calc(var(--section-y) / 2) 40px;
   border-left: 1px solid var(--c-border);
 }
 .stat__value {
@@ -362,11 +367,11 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* Entreprise */
 .about { border-bottom: 1px solid var(--c-border); }
-.about__inner { padding-block: 96px 104px; }
+.about__inner { padding-block: var(--section-y); }
 .about__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 72px;
+  gap: var(--gap-col);
   align-items: start;
 }
 .about__title {
@@ -410,17 +415,17 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   border-bottom: 1px solid var(--c-border);
   background: var(--c-bg-alt);
 }
-.usages__inner { padding-block: 96px 104px; }
+.usages__inner { padding-block: var(--section-y); }
 .usages__head {
   display: flex;
   align-items: end;
   justify-content: space-between;
-  gap: 40px;
+  gap: var(--gap-col);
   padding-bottom: 20px;
   border-bottom: 1px solid var(--c-border-strong);
 }
 .usages__title {
-  margin-top: 26px;
+  margin-top: 32px;
   font-size: clamp(26px, 2.7vw, 36px);
   line-height: 1.15;
   letter-spacing: -.02em;
@@ -457,7 +462,7 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* Gamme */
 .range { border-bottom: 1px solid var(--c-border); }
-.range__inner { padding-block: 96px 104px; }
+.range__inner { padding-block: var(--section-y); }
 .range__title {
   margin: 32px 0 48px;
   font-size: clamp(26px, 2.7vw, 36px);
@@ -469,10 +474,10 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .range__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 28px;
+  gap: var(--gap-card);
   align-items: stretch;
 }
-.range__column { display: grid; gap: 28px; }
+.range__column { display: grid; gap: var(--gap-card); }
 
 .range-card {
   display: flex;
@@ -545,11 +550,11 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* Caractéristiques */
 .features { background: var(--c-dark); color: var(--c-dark-text); }
-.features__inner { padding-block: 104px 112px; }
+.features__inner { padding-block: var(--section-y); }
 .features__head {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 56px;
+  gap: var(--gap-col);
   margin: 36px 0 56px;
   align-items: end;
 }
@@ -588,13 +593,13 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* Contact */
 .cta { border-bottom: 1px solid var(--c-border); }
-.cta__inner { padding-block: 88px 96px; }
+.cta__inner { padding-block: var(--section-y); }
 .cta__panel {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 48px;
+  gap: var(--gap-col);
   align-items: center;
-  padding: 48px 40px 52px;
+  padding: 48px 40px;
   border: 1px solid var(--c-border);
   background: var(--c-bg-alt);
 }
@@ -631,11 +636,11 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 
 /* Footer */
 .site-footer { background: var(--c-dark); color: var(--c-dark-soft); }
-.site-footer__inner { padding-block: 64px 40px; }
+.site-footer__inner { padding-block: calc(var(--section-y) * .66) 40px; }
 .site-footer__top {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 48px;
+  gap: var(--gap-col);
   padding-bottom: 48px;
   border-bottom: 1px solid var(--c-dark-border);
 }
@@ -680,17 +685,26 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 }
 
 /* ---------- 6. Responsive ---------- */
-/* Le hero passe en une colonne vers 800px : sans ça, le padding bas de la
-   colonne texte + le gap de la grille laissent un grand vide avant la photo. */
+/* Les grilles passent en une colonne vers 800px. Le rythme se resserre d'un cran :
+   les écarts pensés pour deux colonnes côte à côte deviennent des vides verticaux. */
 @media (max-width: 800px) {
-  .hero__copy { padding-bottom: 40px; }
+  :root {
+    --section-y: 72px;
+    --gap-col:   40px;
+    --gap-card:  24px;
+  }
   .media--hero { aspect-ratio: 16 / 10; }
   /* En une colonne, un cadre 4/5 pleine largeur ferait 860px de haut. */
   .media--portrait { aspect-ratio: 3 / 2; }
 }
 
 @media (max-width: 720px) {
-  :root { --gutter: 20px; }
+  :root {
+    --gutter:    20px;
+    --section-y: 56px;
+    --gap-col:   32px;
+    --gap-card:  20px;
+  }
 
   /* Navigation repliée derrière le burger */
   .site-header__logo { height: 44px; }
@@ -731,14 +745,20 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   .usage__desc { grid-column: 2 / 4; }
   .usage__arrow { grid-row: 1; grid-column: 3; }
 
-  .range-row { grid-template-columns: 1fr; }
-  .media--thumb {
-    border-right: 0;
-    border-bottom: 1px solid var(--c-border);
-    aspect-ratio: 16 / 9;
-  }
+  /* Cadres au format des sources (carrées) : sinon `contain` laisse des bandes
+     beiges à gauche et à droite, et la photo ne s'aligne plus sur le texte. */
+  .media--card { aspect-ratio: 1 / 1; }
+  .range-row { grid-template-columns: 110px minmax(0, 1fr); }
 
   .cta__panel { padding: 32px 24px 36px; }
-  .stat { padding: 40px 24px 44px; }
+
+  /* Empilées, les stats alignaient leurs bordures gauches en un rail vertical.
+     Le séparateur devient horizontal, comme entre deux lignes. */
+  .stat {
+    padding-inline: 24px;
+    border-left: 0;
+    border-top: 1px solid var(--c-border);
+  }
+  .stat:first-child { border-top: 0; }
   .site-footer__bottom { flex-direction: column; gap: 12px; }
 }

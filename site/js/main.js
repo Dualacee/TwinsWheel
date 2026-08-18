@@ -50,20 +50,29 @@
   var ticking = false;
 
   function update() {
+    // Sous 800px les grilles sont empilées : décaler la photo la ferait
+    // chevaucher le bloc qui la précède.
+    var stacked = window.innerWidth <= 800;
     var y = window.scrollY;
+
     layers.forEach(function (el) {
-      var k = parseFloat(el.getAttribute('data-parallax')) || 0;
       var child = el.firstElementChild;
-      if (child) child.style.transform = 'translateY(' + (-y * k) + 'px)';
+      if (!child) return;
+      if (stacked) { child.style.transform = ''; return; }
+      var k = parseFloat(el.getAttribute('data-parallax')) || 0;
+      child.style.transform = 'translateY(' + (-y * k) + 'px)';
     });
     ticking = false;
   }
 
-  window.addEventListener('scroll', function () {
+  function request() {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(update);
-  }, { passive: true });
+  }
+
+  window.addEventListener('scroll', request, { passive: true });
+  window.addEventListener('resize', request, { passive: true });
 
   update();
 })();
