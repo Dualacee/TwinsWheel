@@ -1,0 +1,9 @@
+# Outils locaux
+.claude/
+
+# OS / éditeurs
+Thumbs.db
+.DS_Store
+*.swp
+.vscode/
+.idea/
