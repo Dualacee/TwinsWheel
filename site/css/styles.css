@@ -301,9 +301,8 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: var(--gap-col);
-  align-items: end;
+  align-items: center;
 }
-.hero__visual { align-self: center; }
 .hero .eyebrow { margin-bottom: 28px; }
 .hero__title {
   font-size: clamp(38px, 4.6vw, 62px);
@@ -572,13 +571,19 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
   color: var(--c-dark-soft);
   max-width: 48ch;
 }
+/* Colonnes explicites et non `auto-fit` : le bloc CTA a besoin d'un nombre de
+   colonnes connu pour savoir s'il occupe les 2 cellules libres (4 colonnes,
+   6 tuiles + 2 = ligne pleine) ou s'il passe en pleine largeur dessous. */
 .features__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1px;
   background: var(--c-dark-border);
   border: 1px solid var(--c-dark-border);
 }
+@media (min-width: 600px)  { .features__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px)  { .features__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1180px) { .features__grid { grid-template-columns: repeat(4, 1fr); } }
 .feature {
   display: flex;
   flex-direction: column;
@@ -590,6 +595,33 @@ h1, h2, h3, p, figure, dl, dd { margin: 0; }
 .feature__icon { color: var(--c-dark-green); }
 .feature__title { font-size: 18px; font-weight: 500; letter-spacing: -.01em; }
 .feature__desc { font-size: 14px; line-height: 1.6; color: var(--c-dark-muted); }
+
+/* Bloc CTA : pleine largeur sous la grille par défaut, replié dans les
+   2 cellules libres quand la grille est en 4 colonnes (voir @media plus haut). */
+.feature--cta {
+  grid-column: 1 / -1;
+  justify-content: center;
+  color: var(--c-dark-text);
+  transition: background-color .2s var(--ease);
+}
+@media (min-width: 1180px) { .feature--cta { grid-column: span 2; } }
+
+.feature--cta:hover { background: #1B1F25; color: var(--c-dark-text); }
+.feature__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--c-dark-green);
+}
+.feature--cta__title {
+  font-size: clamp(19px, 1.6vw, 23px);
+  line-height: 1.3;
+  letter-spacing: -.015em;
+  font-weight: 500;
+  max-width: 34ch;
+}
+.link-arrow--light { color: var(--c-dark-green); }
 
 /* Contact */
 .cta { border-bottom: 1px solid var(--c-border); }
